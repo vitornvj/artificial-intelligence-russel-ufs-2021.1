@@ -52,7 +52,7 @@ public class ProbabilityDemo {
 
 	public static void main(String[] args) {
 		// Chapter 13
-		
+		exerciseResolution2();
 		fullJointDistributionModelDemo();
 		// Chapter 14 - Exact
 		bayesEnumerationAskDemo();
@@ -79,10 +79,10 @@ public class ProbabilityDemo {
 		demoBurglaryAlarmModel(new FullJointDistributionBurglaryAlarmModel());
 		System.out.println("===================================");
 	}
-	public static void response() {
+	public static void exerciseResolution2() {
 		System.out.println("DEMO: Exercise Response");
 		System.out.println("===================================");
-		Exercise06(new FullJointDistributionToothacheCavityCatchModel());
+		Exercise02(new FullJointDistributionToothacheCavityCatchModel());
 		System.out.println("===================================");
 	}
 
@@ -445,7 +445,30 @@ public class ProbabilityDemo {
 						acatch));
 		
 	}
-	
+	private static void Exercise02(FiniteProbabilityModel model) {
+		System.out.println("Exercise 02 - Artificial Intelligence");
+		System.out.println("----------------------------------");
+		AssignmentProposition atoothache = new AssignmentProposition(
+				ExampleRV.TOOTHACHE_RV, Boolean.TRUE);
+		AssignmentProposition acavity = new AssignmentProposition(
+				ExampleRV.CAVITY_RV, Boolean.TRUE);
+		AssignmentProposition anotcavity = new AssignmentProposition(
+				ExampleRV.CAVITY_RV, Boolean.FALSE);
+		AssignmentProposition acatch = new AssignmentProposition(
+				ExampleRV.CATCH_RV, Boolean.TRUE);
+		AssignmentProposition anottoothache = new AssignmentProposition(ExampleRV.TOOTHACHE_RV,Boolean.FALSE);
+		System.out.println("P<>(DorDeDente) = <"
+				+ model.prior(atoothache) +","+ model.prior(anottoothache)+">");
+		System.out.println("P<>(Cárie) = <"
+				+ model.prior(acavity) +","+ model.prior(anotcavity)+">");
+		System.out.println("P<>(DorDeDente | cárie) = "
+				+ model.posteriorDistribution(ExampleRV.TOOTHACHE_RV,acavity));
+		
+		DisjunctiveProposition toothacheOrCatch = new DisjunctiveProposition(
+				atoothache,acatch);
+		System.out.println("P<>(Cárie | dorDeDente v boticão ) = "
+				+ model.posteriorDistribution(ExampleRV.CAVITY_RV,toothacheOrCatch));
+	}
 
 	private static void demoBurglaryAlarmModel(FiniteProbabilityModel model) {
 		System.out.println("--------------------");
